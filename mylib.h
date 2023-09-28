@@ -14,6 +14,9 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
+using std::numeric_limits;
+using std::streamsize;
+using std::max;
 
 
 
