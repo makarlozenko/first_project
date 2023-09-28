@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 
 
 using std::cout;
@@ -69,5 +71,9 @@ void spausdintiDuomenis(const vector<Studentas> studentai, bool naudotiMediana){
         printf("%10s%20s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
     }
 
+}
+int GetRandomPaz(int min, int max){
+  int num = min + rand() % (max - min + 1);
+  return num;
 }
 #endif // MYLIB_H_INCLUDED
