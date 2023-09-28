@@ -21,7 +21,6 @@ struct Studentas{
     vector <int> paz;
     int egz;
     float rez;
-    float vidurkis;
 };
 
 float vidurkis(const vector<int> pazymiai) {

@@ -18,15 +18,13 @@ int main() {
         cout << "Iveskite " << i + 1 << " studento pavarde: ";
         cin >> studentai[i].pav;
 
-        int namuDarbuSkaicius;
-        cout << "Iveskite " << i + 1 << " studento namu darbu skaiciu: ";
-        cin >> namuDarbuSkaicius;
-
-        studentai[i].paz.resize(namuDarbuSkaicius);
-
-        cout << "Iveskite " << i + 1 << " studento pazymius (tarpinius rezultatus): ";
-        for (int j = 0; j < namuDarbuSkaicius; j++) {
-            cin >> studentai[i].paz[j];
+        int pazymys;
+        cout << "Iveskite " << i + 1 << " studento namu darbu rezultatus (baigti su -1): ";
+        while (cin >> pazymys) {
+            if (pazymys == -1) {
+                break;
+            }
+            studentai[i].paz.push_back(pazymys);
         }
 
         cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
