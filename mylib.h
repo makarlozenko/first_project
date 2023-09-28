@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 
 using std::cout;
@@ -31,18 +32,42 @@ float vidurkis(const vector<int> pazymiai) {
     }
     return static_cast<float>(suma) / pazymiai.size();
 }
+float mediana(const vector<int> pazymiai) {
+    if (pazymiai.empty()) return 0.0f;
 
-float skaiciuotiGalutiniBala(const Studentas studentas) {
-    return 0.4 * vidurkis(studentas.paz) + 0.6 * studentas.egz;
+    vector<int> sortedPazymiai = pazymiai;
+    sort(sortedPazymiai.begin(), sortedPazymiai.end());
+
+    int n = sortedPazymiai.size();
+    if (n % 2 == 0) {
+        int vid1 = sortedPazymiai[n / 2 - 1];
+        int vid2 = sortedPazymiai[n / 2];
+        return static_cast<float>(vid1 + vid2) / 2.0f;
+    } else {
+        return static_cast<float>(sortedPazymiai[n / 2]);
+    }
 }
 
-void spausdintiDuomenis(const vector<Studentas> studentai){
+float skaiciuotiGalutiniBala(const Studentas studentas, bool naudotiMediana) {
+    if (naudotiMediana==1){
+        return 0.4 * mediana(studentas.paz) + 0.6 * studentas.egz;
+    }else{
+        return 0.4 * vidurkis(studentas.paz) + 0.6 * studentas.egz;
+    }
+
+}
+
+void spausdintiDuomenis(const vector<Studentas> studentai, bool naudotiMediana){
     printf("\nStudentu duomenys:\n");
     printf("----------------------------------------------------------\n");
-    printf("%10s%10s%20s\n", "Vardas","Pavarde","Galutinis(Vid.)\n");
+    if (naudotiMediana==1){
+        printf("%10s%20s%20s\n", "Vardas","Pavarde","Galutinis(Med.)");
+    }else{
+        printf("%10s%20s%20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
+    }
     printf("----------------------------------------------------------\n");
     for (const Studentas studentas : studentai) {
-        printf("%10s%10s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+        printf("%10s%20s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
     }
 
 }

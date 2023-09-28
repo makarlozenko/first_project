@@ -5,6 +5,10 @@ int main() {
     cout << "Iveskite studentu skaiciu: ";
     cin >> studentuSkaicius;
 
+    bool naudotiMediana;
+    cout << "Naudoti mediana ar vidurki (0 - vidurkis, 1 - mediana): ";
+    cin >> naudotiMediana;
+
     vector <Studentas> studentai(studentuSkaicius);
 
     for (int i = 0; i < studentuSkaicius; i++) {
@@ -28,9 +32,10 @@ int main() {
         cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
         cin >> studentai[i].egz;
 
-        studentai[i].rez = skaiciuotiGalutiniBala(studentai[i]);
+        studentai[i].rez = skaiciuotiGalutiniBala(studentai[i], naudotiMediana);
     }
-    spausdintiDuomenis(studentai);
+
+    spausdintiDuomenis(studentai, naudotiMediana);
 
     return 0;
 }
