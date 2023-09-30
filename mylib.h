@@ -1,6 +1,7 @@
 #ifndef MYLIB_H_INCLUDED
 #define MYLIB_H_INCLUDED
 
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -18,12 +19,8 @@ using std::string;
 using std::vector;
 using std::numeric_limits;
 using std::streamsize;
-using std::max;
 using std::ifstream;
-using std::getline;
 using std::stringstream;
-
-
 
 
 struct Studentas{
@@ -34,13 +31,7 @@ struct Studentas{
 };
 
 
-
-
-
-
-
-
-float vidurkis(const vector<int> pazymiai) {
+float vidurkis(vector<int> pazymiai) {
     if (pazymiai.empty()) return 0.0f;
     int suma = 0;
     for (int pazymys : pazymiai) {
@@ -50,12 +41,7 @@ float vidurkis(const vector<int> pazymiai) {
 }
 
 
-
-
-
-
-
-float mediana(const vector<int> pazymiai) {
+float mediana(vector<int> pazymiai) {
     if (pazymiai.empty()) return 0.0f;
 
     vector<int> sortedPazymiai = pazymiai;
@@ -72,11 +58,7 @@ float mediana(const vector<int> pazymiai) {
 }
 
 
-
-
-
-
-float skaiciuotiGalutiniBala(const Studentas studentas, bool naudotiMediana) {
+float skaiciuotiGalutiniBala(Studentas studentas, bool naudotiMediana) {
     if (naudotiMediana==1){
         return 0.4 * mediana(studentas.paz) + 0.6 * studentas.egz;
     }else{
@@ -86,119 +68,77 @@ float skaiciuotiGalutiniBala(const Studentas studentas, bool naudotiMediana) {
 }
 
 
-
-
-
-
-
-
-int GetRandomPaz(int min, int max){
-  int num = min + rand() % (max - min + 1);
-  return num;
+int GetRandomPaz(int minimum, int maximum){
+    int num = minimum + rand() % (maximum - minimum + 1);
+    return num;
 }
 
 
-
-
-
-int CountLinesInFile(string filename)
-{
-  ifstream F(filename);
-  if (!F)
-  {
-    return -1;
-  }
-  int count = 0;
-  char buffer[1000];
-  while (!F.eof())
-  {
-    count++;
-    F.getline(buffer, 1000);
-  }
-  F.close();
-  return count;
+int kiekEiluciu(string failoPavadinimas){
+    ifstream F(failoPavadinimas);
+    int eilkiekis = 0;
+    char buffer[1000];
+    while (!F.eof()){
+        eilkiekis++;
+        F.getline(buffer, 1000);
+    }
+    F.close();
+    return eilkiekis;
 }
-int countColumns(string failoPavadinimas) {
-    int cols = 0;
 
-    ifstream file(failoPavadinimas);
-    if (file.is_open()) {
+
+int kiekStulp(string failoPavadinimas){
+    int stulp = 0;
+    ifstream F(failoPavadinimas);
+    if (F.is_open()){
         string line;
-        if (getline(file, line)) {
+        if (getline(F, line)){
             stringstream ss(line);
             string item;
-            while (ss >> item) {
-                cols++;
+            while (ss >> item){
+                stulp++;
             }
         }
-        file.close();
+        F.close();
     }
-
-    return cols;
+    return stulp;
 }
 
 
-
-
-
-
-
-void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai) {
+void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai){
     ifstream failas(failoPavadinimas);
-    if (!failas.is_open()) {
+    if (!failas.is_open()){
         cout << "Nepavyko atidaryti failo!" << endl;
         return;
     }
+
     string pirmojiEilute;
     getline(failas, pirmojiEilute);
 
-    int cols;
-    cols=countColumns(failoPavadinimas);
-    cout<<cols<<endl;
-    int k=CountLinesInFile(failoPavadinimas);
-    cout<<k<<endl;
-    for (int i=0; i<k-1; i++){
+    int stulp=kiekStulp(failoPavadinimas);
+    int eil=kiekEiluciu(failoPavadinimas);
+
+    for (int i=0; i<eil-1; i++){
         Studentas studentas;
         failas >> studentas.pav >> studentas.var;
         int pazymys;
 
-        for(int i = 0; i < cols-3; i++){
+        for (int i = 0; i < stulp-3; i++){
             failas >> pazymys;
-            studentas.paz.push_back(pazymys);
+            if (pazymys>0 && pazymys<11) {
+                studentas.paz.push_back(pazymys);
+            }else{
+                cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
+            }
         }
 
         failas >> studentas.egz;
-
-
-    studentai.push_back(studentas);
+        studentai.push_back(studentas);
     }
-
-    //for (Studentas stud: studentai) {
-      //      cout << "NEXT STUD" << "\n";
-
-        //    cout<< "\n" << stud.var << " " << stud.pav << "\n";
-          //  for(int ocenka : stud.paz){
-            //    cout << ocenka << " ";
-            //}
-            //cout << "egz = " << stud.egz << "\n\n";
-        //}
-
-
-
-
-
 }
 
 
-
-
-
-
-
-
-
-
-void spausdintiDuomenis(const vector<Studentas> studentai, bool naudotiMediana){
+void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana){
     printf("\nStudentu duomenys:\n");
     printf("----------------------------------------------------------\n");
     if (naudotiMediana==1){
@@ -210,6 +150,6 @@ void spausdintiDuomenis(const vector<Studentas> studentai, bool naudotiMediana){
     for (const Studentas studentas : studentai) {
         printf("%10s%20s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
     }
-
 }
+
 #endif // MYLIB_H_INCLUDED

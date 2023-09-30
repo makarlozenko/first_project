@@ -2,8 +2,6 @@
 
 int main() {
 
-
-
     bool naudotiFaila;
     while (true) {
     cout << "Naudoti faila ar ranka (0 - failas, 1 - ranka): ";
@@ -12,9 +10,10 @@ int main() {
         cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    } else {
+    }else{
         break;
     }}
+
 
     bool naudotiMediana;
     while (true) {
@@ -29,15 +28,14 @@ int main() {
     }}
 
 
-
     if (naudotiFaila==0){
         vector <Studentas> studentai;
         string failoPavadinimas;
         cout << "Iveskite failo pavadinima: ";
         cin >> failoPavadinimas;
         nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
-        int n=CountLinesInFile(failoPavadinimas);
-        for (int m = 0; m < n-1; m++) {
+        int eil=kiekEiluciu(failoPavadinimas);
+        for (int m = 0; m < eil-1; m++) {
             studentai[m].rez = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
         }
         spausdintiDuomenis(studentai, naudotiMediana);
@@ -92,6 +90,7 @@ int main() {
                     }
                 }
 
+
                 while (true) {
                 cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
                 cin >> studentai[i].egz;
@@ -102,6 +101,7 @@ int main() {
                 } else {
                     break;
                 }}
+
 
             }else{
                 srand(time(NULL));
@@ -120,11 +120,8 @@ int main() {
                 cout << "Egzaminas: " << studentai[i].egz <<endl;
 
             }
-
-
             studentai[i].rez = skaiciuotiGalutiniBala(studentai[i], naudotiMediana);
         }
-
         spausdintiDuomenis(studentai, naudotiMediana);
     }
     return 0;
