@@ -21,6 +21,7 @@ using std::numeric_limits;
 using std::streamsize;
 using std::ifstream;
 using std::stringstream;
+using std::sort;
 
 
 struct Studentas{
@@ -120,7 +121,7 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
 
     for (int i=0; i<eil-1; i++){
         Studentas studentas;
-        failas >> studentas.pav >> studentas.var;
+        failas >> studentas.var >> studentas.pav;
         int pazymys;
 
         for (int i = 0; i < stulp-3; i++){
@@ -138,23 +139,34 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
 }
 
 
+bool palygStudentByVar(Studentas a, Studentas b) {
+    return a.var < b.var;
+}
+
+
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila){
     printf("\nStudentu duomenys:\n");
     printf("------------------------------------------------------------------------\n");
+
+    sort(studentai.begin(), studentai.end(),palygStudentByVar);
+
     if (naudotiFaila==0){
-        printf("%10s%20s%20s%20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
+        printf("%-10s%-20s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
+        printf("------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%10s%20s%20.2f%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv,studentas.rezm);
+            printf("%-10s%-20s%-20.2f%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv,studentas.rezm);
         }
     }else if (naudotiMediana==1){
-        printf("%10s%20s%20s\n", "Vardas","Pavarde","Galutinis(Med.)");
+        printf("%-10s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Med.)");
+        printf("------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%10s%20s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+            printf("%-10s%-20s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
         }
     }else{
-        printf("%10s%20s%20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
+        printf("%-10s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
+        printf("------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%10s%20s%20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+            printf("%-10s%-20s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
         }
     }
     printf("-------------------------------------------------------------------------\n");
