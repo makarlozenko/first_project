@@ -15,19 +15,6 @@ int main() {
     }}
 
 
-    bool naudotiMediana;
-    while (true) {
-    cout << "Naudoti mediana ar vidurki (0 - vidurkis, 1 - mediana): ";
-    cin >> naudotiMediana;
-    if (cin.fail() || (naudotiMediana != 0 && naudotiMediana != 1)) {
-        cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    } else {
-        break;
-    }}
-
-
     if (naudotiFaila==0){
         vector <Studentas> studentai;
         string failoPavadinimas;
@@ -35,11 +22,28 @@ int main() {
         cin >> failoPavadinimas;
         nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
         int eil=kiekEiluciu(failoPavadinimas);
+        bool naudotiMediana;
         for (int m = 0; m < eil-1; m++) {
-            studentai[m].rez = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
+            naudotiMediana=1;
+            studentai[m].rezm = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
+            naudotiMediana=0;
+            studentai[m].rezv = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
         }
-        spausdintiDuomenis(studentai, naudotiMediana);
+        spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
     }else{
+
+        bool naudotiMediana;
+        while (true) {
+            cout << "Naudoti mediana ar vidurki (0 - vidurkis, 1 - mediana): ";
+            cin >> naudotiMediana;
+            if (cin.fail() || (naudotiMediana != 0 && naudotiMediana != 1)) {
+                cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            } else {
+                break;
+        }}
+
         int studentuSkaicius;
         while (true) {
         cout << "Iveskite studentu skaiciu: ";
@@ -122,7 +126,7 @@ int main() {
             }
             studentai[i].rez = skaiciuotiGalutiniBala(studentai[i], naudotiMediana);
         }
-        spausdintiDuomenis(studentai, naudotiMediana);
+        spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
     }
     return 0;
 }
