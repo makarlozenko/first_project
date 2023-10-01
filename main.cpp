@@ -3,16 +3,22 @@
 int main() {
 
     bool naudotiFaila;
-    while (true) {
-    cout << "Naudoti faila ar ranka (0 - failas, 1 - ranka): ";
-    cin >> naudotiFaila;
-    if (cin.fail() || (naudotiFaila != 0 && naudotiFaila != 1)) {
-        cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }else{
-        break;
-    }}
+    while(true){
+        try{
+            cout << "Naudoti faila ar ranka (0 - failas, 1 - ranka): ";
+            cin >> naudotiFaila;
+
+            if(cin.fail() || (naudotiFaila != 0 && naudotiFaila != 1)){
+                throw invalid_argument("Nevalidus pasirinkimas. Prasome ivesti 0 arba 1.");
+            }else{
+                break;
+            }
+        }catch (invalid_argument e){
+            cerr << e.what() << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
 
 
     if (naudotiFaila==0){
@@ -34,40 +40,58 @@ int main() {
 
         bool naudotiMediana;
         while (true) {
-            cout << "Naudoti mediana ar vidurki (0 - vidurkis, 1 - mediana): ";
-            cin >> naudotiMediana;
-            if (cin.fail() || (naudotiMediana != 0 && naudotiMediana != 1)) {
-                cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
+            try{
+                cout << "Naudoti mediana ar vidurki (0 - vidurkis, 1 - mediana): ";
+                cin >> naudotiMediana;
+
+                if (cin.fail() || (naudotiMediana != 0 && naudotiMediana != 1)) {
+                    throw invalid_argument( "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1.");
+                } else {
+                    break;
+                }
+            }catch (invalid_argument e){
+                cerr << e.what() << endl;
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            } else {
-                break;
-        }}
+            }
+        }
 
         int studentuSkaicius;
         while (true) {
-        cout << "Iveskite studentu skaiciu: ";
-        cin >> studentuSkaicius;
-        if (cin.fail()) {
-            cout << "Nevalidus pasirinkimas. Prasome ivesti skaiciu." << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
-            break;
-        }}
+            try{
+                cout << "Iveskite studentu skaiciu: ";
+                cin >> studentuSkaicius;
+
+                if (cin.fail() || (studentuSkaicius < 1)) {
+                    throw invalid_argument( "Nevalidus pasirinkimas. Prasome ivesti studentu skaiciu.");
+                } else {
+                    break;
+                }
+            }catch (invalid_argument e){
+                cerr << e.what() << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+        }
 
 
         bool generuotiPaz;
-        while (true) {
-        cout << "Sugeneruoti pazymius atsitiktinai(0 - NE, 1 - TAIP): ";
-        cin >> generuotiPaz;
-        if (cin.fail() || (generuotiPaz != 0 && generuotiPaz != 1)) {
-            cout << "Nevalidus pasirinkimas. Prasome ivesti 0 arba 1." << endl;
+        while(true){
+        try{
+            cout << "Sugeneruoti pazymius atsitiktinai(0 - NE, 1 - TAIP):";
+            cin >> generuotiPaz;
+
+            if(cin.fail() || (generuotiPaz != 0 && generuotiPaz != 1)){
+                throw invalid_argument("Nevalidus pasirinkimas. Prasome ivesti 0 arba 1.");
+            }else{
+                break;
+            }
+        }catch (invalid_argument e){
+            cerr << e.what() << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
-            break;
-        }}
+        }
+    }
 
         vector <Studentas> studentai(studentuSkaicius);
 
@@ -79,40 +103,67 @@ int main() {
             cin >> studentai[i].pav;
 
             if (generuotiPaz==0){
-                cout << "Iveskite " << i + 1 << " studento namu darbu rezultatus (baigti su -1): ";
-                while (true) {
-                    int pazymys;
-                    cin >> pazymys;
-                    if (cin.fail()||pazymys<-1||pazymys>10) {
-                        cout << "Nevalidus pazymys. Prasome ivesti pazymius." << endl;
+                 cout << "Iveskite " << i + 1 << " studento namu darbu rezultatus (baigti su -1): ";
+                 while (true) {
+                    try{
+                        int pazymys;
+                        cin >> pazymys;
+
+                        if (cin.fail() || pazymys<-1 ||pazymys>10 || pazymys==0) {
+                            throw invalid_argument( "Nevalidus pazymys. Prasome ivesti pazymius : ");
+                        } else if (pazymys == -1) {
+                            break;
+                        } else {
+                            studentai[i].paz.push_back(pazymys);
+                        }
+                    }catch (invalid_argument e){
+                        cerr << e.what() << endl;
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    } else if (pazymys == -1) {
-                        break;
-                    } else {
-                        studentai[i].paz.push_back(pazymys);
                     }
                 }
 
 
                 while (true) {
-                cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
-                cin >> studentai[i].egz;
-                if (cin.fail()||studentai[i].egz<1||studentai[i].egz>10) {
-                    cout << "Nevalidus pasirinkimas. Prasome ivesti pazymi." << endl;
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                } else {
-                    break;
-                }}
+                    try{
+                        cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
+                        cin >> studentai[i].egz;
+
+                        if (cin.fail() || studentai[i].egz<1 ||studentai[i].egz>10) {
+                            throw invalid_argument( "Nevalidus rezultatas. Prasome ivesti pazymi.");
+                        } else {
+                            break;
+                        }
+                    }catch (invalid_argument e){
+                        cerr << e.what() << endl;
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    }
+                }
+
 
 
             }else{
                 srand(time(NULL));
                 int ndkiekis;
                 int pazymys;
-                cout << "Kiek norite pazymiu? ";
-                cin >> ndkiekis;
+                while (true) {
+                    try{
+                        cout << "Kiek norite pazymiu? ";
+                        cin >> ndkiekis;
+
+                        if (cin.fail() || (ndkiekis<0)) {
+                            throw invalid_argument( "Nevalidus pasirinkimas. Prasome ivesti pazymiu kieki.");
+                        } else {
+                            break;
+                        }
+                    }catch (invalid_argument e){
+                        cerr << e.what() << endl;
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    }
+                }
+
                 cout << "Atsitiktinai sugeneruoti " << i + 1 << " studento namu darbu pazymiai:" ;
                 for(int k = 0; k < ndkiekis; k++) {
                     pazymys = GetRandomPaz(1, 10);

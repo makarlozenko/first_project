@@ -22,6 +22,8 @@ using std::streamsize;
 using std::ifstream;
 using std::stringstream;
 using std::sort;
+using std::invalid_argument;
+using std::cerr;
 
 
 struct Studentas{
