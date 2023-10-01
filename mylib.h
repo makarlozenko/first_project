@@ -93,17 +93,15 @@ int kiekEiluciu(string failoPavadinimas){
 int kiekStulp(string failoPavadinimas){
     int stulp = 0;
     ifstream F(failoPavadinimas);
-    if (F.is_open()){
-        string line;
-        if (getline(F, line)){
-            stringstream ss(line);
-            string item;
-            while (ss >> item){
-                stulp++;
-            }
+    string line;
+    if (getline(F, line)){
+        stringstream ss(line);
+        string item;
+        while (ss >> item){
+            stulp++;
         }
-        F.close();
     }
+    F.close();
     return stulp;
 }
 
@@ -114,7 +112,6 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
         cout << "Nepavyko atidaryti failo!" << endl;
         return;
     }
-
     string pirmojiEilute;
     getline(failas, pirmojiEilute);
 
@@ -138,6 +135,7 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
         failas >> studentas.egz;
         studentai.push_back(studentas);
     }
+    failas.close();
 }
 
 
@@ -148,30 +146,30 @@ bool palygStudentByVar(Studentas a, Studentas b) {
 
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila){
     printf("\nStudentu duomenys:\n");
-    printf("------------------------------------------------------------------------\n");
+    printf("---------------------------------------------------------------------------------------\n");
 
     sort(studentai.begin(), studentai.end(),palygStudentByVar);
 
     if (naudotiFaila==0){
-        printf("%-10s%-20s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
-        printf("------------------------------------------------------------------------\n");
+        printf("%-25s%-25s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
+        printf("---------------------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%-10s%-20s%-20.2f%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv,studentas.rezm);
+            printf("%-25s%-25s%-20.2f%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv,studentas.rezm);
         }
     }else if (naudotiMediana==1){
-        printf("%-10s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Med.)");
-        printf("------------------------------------------------------------------------\n");
+        printf("%-25s%-25s%-20s\n", "Vardas","Pavarde","Galutinis(Med.)");
+        printf("--------------------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%-10s%-20s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+            printf("%-25s%-25s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
         }
     }else{
-        printf("%-10s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
-        printf("------------------------------------------------------------------------\n");
+        printf("%-25s%-25s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
+        printf("--------------------------------------------------------------------------------------\n");
         for (const Studentas studentas : studentai) {
-            printf("%-10s%-20s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+            printf("%-25s%-25s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
         }
     }
-    printf("-------------------------------------------------------------------------\n");
+    printf("----------------------------------------------------------------------------------------\n");
 
 }
 
