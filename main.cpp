@@ -46,7 +46,7 @@ int main() {
             string naujasFailas;
             cout << "Iveskite naujo failo pavadinima: ";
             cin >> naujasFailas;
-            fstream nFailas (naujasFailas+".txt");
+            ofstream nFailas (naujasFailas+".txt");
 
             int sKiekis;
             cout<<"Kiek norite studentu? ";

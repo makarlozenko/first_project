@@ -21,7 +21,7 @@ using std::vector;
 using std::numeric_limits;
 using std::streamsize;
 using std::ifstream;
-using std::fstream;
+using std::ofstream;
 using std::stringstream;
 using std::sort;
 using std::invalid_argument;
