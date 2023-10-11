@@ -21,21 +21,95 @@ int main() {
     }
 
 
+
     if (naudotiFaila==0){
-        vector <Studentas> studentai;
-        string failoPavadinimas;
-        cout << "Iveskite failo pavadinima: ";
-        cin >> failoPavadinimas;
-        nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
-        int eil=kiekEiluciu(failoPavadinimas);
-        bool naudotiMediana;
-        for (int m = 0; m < eil-1; m++) {
-            naudotiMediana=1;
-            studentai[m].rezm = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
-            naudotiMediana=0;
-            studentai[m].rezv = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
+        bool generuotiFaila;
+        while(true){
+            try{
+                cout << "Generuoti faila ar ne (0 - NE, 1 - TAIP): ";
+                cin >> generuotiFaila;
+
+                if(cin.fail() || (generuotiFaila != 0 && generuotiFaila != 1)){
+                    throw invalid_argument("Nevalidus pasirinkimas. Prasome ivesti 0 arba 1.");
+                }else{
+                    break;
+                }
+            }catch (invalid_argument e){
+                cerr << e.what() << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
         }
-        spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
+
+        if (generuotiFaila==1) {
+            vector <Studentas> studentai;
+            string naujasFailas;
+            cout << "Iveskite naujo failo pavadinima: ";
+            cin >> naujasFailas;
+            fstream nFailas (naujasFailas+".txt");
+
+            int sKiekis;
+            cout<<"Kiek norite studentu? ";
+            cin>>sKiekis;
+
+            int ndKiekis;
+            cout<<"Kiek norite namu darbu? ";
+            cin>>ndKiekis;
+
+            srand(time(NULL));
+            bool naudotiMediana;
+            int pazymysF;
+            string baseVardas = "Vardas";
+            string basePavarde = "Pavarde";
+            for (int i=0; i < sKiekis; i++){
+                Studentas studentas;
+                string newName = baseVardas + to_string(i+1);
+                studentas.var=newName;
+                string newSurname = basePavarde + to_string(i+1);
+                studentas.pav=newSurname;
+
+
+                for(int k = 0; k < ndKiekis; k++) {
+                    pazymysF = GetRandomPaz(1, 10);
+                    studentas.paz.push_back(pazymysF);
+                }
+                studentas.egz = GetRandomPaz(1, 10);
+
+                naudotiMediana=1;
+                studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+                naudotiMediana=0;
+                studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+                studentai.push_back(studentas);
+            }
+
+
+            nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<<endl;
+            nFailas <<"-----------------------------------------------------------------------------------------------------------"<<endl;
+            for (Studentas student : studentai) {
+                nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+            }
+            cout<<"Failas sekmingai sukurtas!"<<endl;
+            nFailas.close();
+        }else{
+            vector <Studentas> studentai;
+            string failoPavadinimas;
+            cout << "Iveskite failo pavadinima: ";
+            cin >> failoPavadinimas;
+            nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
+            int eil=kiekEiluciu(failoPavadinimas);
+            bool naudotiMediana;
+            for (int m = 0; m < eil-1; m++) {
+                naudotiMediana=1;
+                studentai[m].rezm = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
+                naudotiMediana=0;
+                studentai[m].rezv = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
+            }
+            spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
+        }
+
+
     }else{
 
         bool naudotiMediana;
@@ -109,7 +183,7 @@ int main() {
                         int pazymys;
                         cin >> pazymys;
 
-                        if (cin.fail() || pazymys<-1 ||pazymys>10 || pazymys==0) {
+                        if (cin.fail() || pazymys<-1 ||pazymys>10) {
                             throw invalid_argument( "Nevalidus pazymys. Prasome ivesti pazymius : ");
                         } else if (pazymys == -1) {
                             break;
