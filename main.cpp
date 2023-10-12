@@ -85,13 +85,15 @@ int main() {
             }
 
 
-            nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<<endl;
-            nFailas <<"-----------------------------------------------------------------------------------------------------------"<<endl;
+            nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
             for (Studentas student : studentai) {
                 nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
             }
             cout<<"Failas sekmingai sukurtas!"<<endl;
             nFailas.close();
+
+            rusiuotiDuomenisIsGeneruotoFailo(naujasFailas);
+
         }else{
             vector <Studentas> studentai;
             string failoPavadinimas;

@@ -103,6 +103,62 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
     failas.close();
 }
 
+bool palygStudentByKat(Studentas a, Studentas b) {
+    return a.kategorija < b.kategorija;
+}
+
+
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas){
+    vector<Studentas> studentai;
+    ifstream failas(failoPavadinimas+".txt");
+    if (!failas.is_open()){
+        cout << "Nepavyko atidaryti failo!" << endl;
+        return;
+    }
+    string pirmojiEilute;
+    getline(failas, pirmojiEilute);
+
+
+    Studentas studentas;
+    while (failas >> studentas.var >> studentas.pav >> studentas.rezv >> studentas.rezm) {
+        if (studentas.rezv < 5.0) {
+            studentas.kategorija = "Vargsiukas";
+        } else {
+            studentas.kategorija = "Kietakis";
+        }
+        studentai.push_back(studentas);
+    }
+
+    sort(studentai.begin(), studentai.end(),palygStudentByKat);
+
+    failas.close();
+
+    ofstream failasRusK(failoPavadinimas+"Kietakiai.txt");
+    failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+    for (Studentas student : studentai) {
+        if (student.rezv > 5.0) {
+            failasRusK << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+        }else{
+            continue;
+        }
+    }
+    cout<<"Failas Kietakiai sekmingai surusiuotas!"<<endl;
+    failasRusK.close();
+
+    ofstream failasRusV(failoPavadinimas+"Vargsiukai.txt");
+    failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+    for (Studentas student : studentai) {
+        if (student.rezv < 5.0) {
+            failasRusV << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+        }else{
+            continue;
+        }
+    }
+    cout<<"Failas Vargsiukai sekmingai surusiuotas!"<<endl;
+    failasRusV.close();
+
+}
+
 
 bool palygStudentByVar(Studentas a, Studentas b) {
     return a.var < b.var;

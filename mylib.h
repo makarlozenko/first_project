@@ -29,10 +29,10 @@ using std::cerr;
 using std::to_string;
 using std::left;
 using std::setw;
-
+using std::ios;
 
 struct Studentas{
-    string var, pav;
+    string var, pav, kategorija;
     vector <int> paz;
     int egz;
     float rez, rezv, rezm;
@@ -46,6 +46,8 @@ int GetRandomPaz(int minimum, int maximum);
 int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
 void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
+bool palygStudentByKat(Studentas a, Studentas b);
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas);
 bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 
