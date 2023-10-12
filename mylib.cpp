@@ -108,12 +108,12 @@ bool palygStudentByKat(Studentas a, Studentas b) {
 }
 
 
-void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff){
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma){
     vector<Studentas> studentai;
 
     auto startS = high_resolution_clock::now();
 
-    ifstream failas(failoPavadinimas+".txt");
+    ifstream failas(failoPavadinimas+to_string(t)+".txt");
     if (!failas.is_open()){
         cout << "Nepavyko atidaryti failo!" << endl;
         return;
@@ -148,7 +148,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 
     auto startK = high_resolution_clock::now();
 
-    ofstream failasRusK(failoPavadinimas+"Kietakiai.txt");
+    ofstream failasRusK(failoPavadinimas+to_string(t)+"Kietakiai.txt");
     failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
     for (Studentas student : studentai) {
         if (student.rezv > 5.0) {
@@ -165,7 +165,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 
     auto startV = high_resolution_clock::now();
 
-    ofstream failasRusV(failoPavadinimas+"Vargsiukai.txt");
+    ofstream failasRusV(failoPavadinimas+to_string(t)+"Vargsiukai.txt");
     failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
     for (Studentas student : studentai) {
         if (student.rezv < 5.0) {
@@ -180,7 +180,11 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
     duration<double> diffV = endV-startV;
     cout << "Failo is " << sKiekis << " elementu vargsiuku irasymas i nauja faila uztruko: "<< diffV.count() << " s\n";
 
-    cout << "Failo is " << sKiekis << " elementu testo bendras laikas: "<< diffV.count()+diff.count()+diffK.count()+diffR.count()+diffS.count() << " s\n";
+    double overall = diffV.count()+diff.count()+diffK.count()+diffR.count()+diffS.count();
+
+    cout << "Failo is " << sKiekis << " elementu testo bendras laikas: "<< overall << " s\n";
+    cout <<"-------------------------------------------------------------------------------------------"<<endl;
+    suma+=overall;
 }
 
 

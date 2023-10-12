@@ -42,11 +42,14 @@ int main() {
         }
 
         if (generuotiFaila==1) {
-            vector <Studentas> studentai;
+
+            int testuSk;
+            cout<<"Kiek norite padaryti testu? ";
+            cin >>testuSk;
+
             string naujasFailas;
             cout << "Iveskite naujo failo pavadinima: ";
             cin >> naujasFailas;
-
 
             int sKiekis;
             cout<<"Kiek norite studentu? ";
@@ -56,50 +59,59 @@ int main() {
             cout<<"Kiek norite namu darbu? ";
             cin>>ndKiekis;
 
-            auto start = high_resolution_clock::now();
+            double suma=0;
 
-            ofstream nFailas (naujasFailas+".txt");
+            for (int t=1; t<=testuSk; t++){
+                vector <Studentas> studentai;
 
-            srand(time(NULL));
-            bool naudotiMediana;
-            int pazymysF;
-            string baseVardas = "Vardas";
-            string basePavarde = "Pavarde";
-            for (int i=0; i < sKiekis; i++){
-                Studentas studentas;
-                string newName = baseVardas + to_string(i+1);
-                studentas.var=newName;
-                string newSurname = basePavarde + to_string(i+1);
-                studentas.pav=newSurname;
+                auto start = high_resolution_clock::now();
+
+                ofstream nFailas (naujasFailas+to_string(t)+".txt");
+
+                srand(time(NULL));
+                bool naudotiMediana;
+                int pazymysF;
+                string baseVardas = "Vardas";
+                string basePavarde = "Pavarde";
+                for (int i=0; i < sKiekis; i++){
+                    Studentas studentas;
+                    string newName = baseVardas + to_string(i+1);
+                    studentas.var=newName;
+                    string newSurname = basePavarde + to_string(i+1);
+                    studentas.pav=newSurname;
 
 
-                for(int k = 0; k < ndKiekis; k++) {
-                    pazymysF = GetRandomPaz(1, 10);
-                    studentas.paz.push_back(pazymysF);
+                    for(int k = 0; k < ndKiekis; k++) {
+                        pazymysF = GetRandomPaz(1, 10);
+                        studentas.paz.push_back(pazymysF);
+                    }
+                    studentas.egz = GetRandomPaz(1, 10);
+
+                    naudotiMediana=1;
+                    studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+                    naudotiMediana=0;
+                    studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+                    studentai.push_back(studentas);
                 }
-                studentas.egz = GetRandomPaz(1, 10);
 
-                naudotiMediana=1;
-                studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
 
-                naudotiMediana=0;
-                studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+                nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+                for (Studentas student : studentai) {
+                    nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+                }
+                nFailas.close();
 
-                studentai.push_back(studentas);
+                auto end = high_resolution_clock::now();
+                duration<double> diff = end-start;
+                cout << sKiekis << " elementu uzpildymas uztruko: "<< diff.count() << " s\n";
+
+                rusiuotiDuomenisIsGeneruotoFailo(naujasFailas, sKiekis,  diff, t, suma);
             }
+            cout<<"Padarytu testu laiko vidurkis: "<<suma/testuSk<<endl;
 
 
-            nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
-            for (Studentas student : studentai) {
-                nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
-            }
-            nFailas.close();
-
-            auto end = high_resolution_clock::now();
-            duration<double> diff = end-start;
-            cout << sKiekis << " elementu uzpildymas uztruko: "<< diff.count() << " s\n";
-
-            rusiuotiDuomenisIsGeneruotoFailo(naujasFailas, sKiekis,  diff);
 
         }else{
             vector <Studentas> studentai;

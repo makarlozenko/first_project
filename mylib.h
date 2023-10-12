@@ -51,7 +51,7 @@ int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
 void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
 bool palygStudentByKat(Studentas a, Studentas b);
-void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff);
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma);
 bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 
