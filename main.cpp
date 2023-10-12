@@ -97,9 +97,18 @@ int main() {
                 }
 
 
-                nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+                nFailas <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde";
+                for (int j=1; j<=ndKiekis; j++){
+                    nFailas << left << setw(5) << "ND"+to_string(j);
+                }
+                nFailas << left << setw(20) << "Egzaminas"<< left << setw(20) << "Mediana"<< left << setw(20) << "Vidurkis"<<endl ;
+
                 for (Studentas student : studentai) {
-                    nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+                    nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav ;
+                    for (int paz : student.paz){
+                        nFailas << left << setw(5) << paz;
+                    }
+                    nFailas << left << setw(20) << student.egz<< left << setw(20) << student.rezm<< left << setw(20) << student.rezv<<endl;
                 }
                 nFailas.close();
 

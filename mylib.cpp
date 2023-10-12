@@ -121,9 +121,24 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
     string pirmojiEilute;
     getline(failas, pirmojiEilute);
 
+    int stulp=kiekStulp(failoPavadinimas+to_string(t)+".txt");
+    int eil=kiekEiluciu(failoPavadinimas+to_string(t)+".txt");
 
-    Studentas studentas;
-    while (failas >> studentas.var >> studentas.pav >> studentas.rezv >> studentas.rezm) {
+    for (int i=0; i<eil-2; i++){
+        Studentas studentas;
+        failas >> studentas.var >> studentas.pav;
+        int pazymys;
+
+        for (int i = 0; i < stulp-5; i++){
+            failas >> pazymys;
+            if (pazymys>0 && pazymys<11) {
+                studentas.paz.push_back(pazymys);
+            }else{
+                cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
+            }
+        }
+
+        failas >> studentas.egz>>studentas.rezm>>studentas.rezv;
         if (studentas.rezv < 5.0) {
             studentas.kategorija = "Vargsiukas";
         } else {
