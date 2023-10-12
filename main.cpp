@@ -46,7 +46,7 @@ int main() {
             string naujasFailas;
             cout << "Iveskite naujo failo pavadinima: ";
             cin >> naujasFailas;
-            ofstream nFailas (naujasFailas+".txt");
+
 
             int sKiekis;
             cout<<"Kiek norite studentu? ";
@@ -55,6 +55,10 @@ int main() {
             int ndKiekis;
             cout<<"Kiek norite namu darbu? ";
             cin>>ndKiekis;
+
+            auto start = high_resolution_clock::now();
+
+            ofstream nFailas (naujasFailas+".txt");
 
             srand(time(NULL));
             bool naudotiMediana;
@@ -89,10 +93,13 @@ int main() {
             for (Studentas student : studentai) {
                 nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
             }
-            cout<<"Failas sekmingai sukurtas!"<<endl;
             nFailas.close();
 
-            rusiuotiDuomenisIsGeneruotoFailo(naujasFailas);
+            auto end = high_resolution_clock::now();
+            duration<double> diff = end-start;
+            cout << sKiekis << " elementu uzpildymas uztruko: "<< diff.count() << " s\n";
+
+            rusiuotiDuomenisIsGeneruotoFailo(naujasFailas, sKiekis,  diff);
 
         }else{
             vector <Studentas> studentai;

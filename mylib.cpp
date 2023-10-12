@@ -108,8 +108,11 @@ bool palygStudentByKat(Studentas a, Studentas b) {
 }
 
 
-void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas){
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff){
     vector<Studentas> studentai;
+
+    auto startS = high_resolution_clock::now();
+
     ifstream failas(failoPavadinimas+".txt");
     if (!failas.is_open()){
         cout << "Nepavyko atidaryti failo!" << endl;
@@ -129,9 +132,21 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas){
         studentai.push_back(studentas);
     }
 
+    auto endS = high_resolution_clock::now();
+    duration<double> diffS = endS-startS;
+    cout << "Failo is " << sKiekis << " elementu nuskaitymas uztruko: "<< diffS.count() << " s\n";
+
+    auto startR = high_resolution_clock::now();
+
     sort(studentai.begin(), studentai.end(),palygStudentByKat);
 
+    auto endR = high_resolution_clock::now();
+    duration<double> diffR = endR-startR;
+    cout << "Failo is " << sKiekis << " elementu rusiavimas su sort funkcija uztruko: "<< diffR.count() << " s\n";
+
     failas.close();
+
+    auto startK = high_resolution_clock::now();
 
     ofstream failasRusK(failoPavadinimas+"Kietakiai.txt");
     failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
@@ -142,8 +157,13 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas){
             continue;
         }
     }
-    cout<<"Failas Kietakiai sekmingai surusiuotas!"<<endl;
     failasRusK.close();
+
+    auto endK = high_resolution_clock::now();
+    duration<double> diffK = endK-startK;
+    cout << "Failo is " << sKiekis << " elementu kietakiu irasymas i nauja faila uztruko: "<< diffK.count() << " s\n";
+
+    auto startV = high_resolution_clock::now();
 
     ofstream failasRusV(failoPavadinimas+"Vargsiukai.txt");
     failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
@@ -154,9 +174,13 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas){
             continue;
         }
     }
-    cout<<"Failas Vargsiukai sekmingai surusiuotas!"<<endl;
     failasRusV.close();
 
+    auto endV = high_resolution_clock::now();
+    duration<double> diffV = endV-startV;
+    cout << "Failo is " << sKiekis << " elementu vargsiuku irasymas i nauja faila uztruko: "<< diffV.count() << " s\n";
+
+    cout << "Failo is " << sKiekis << " elementu testo bendras laikas: "<< diffV.count()+diff.count()+diffK.count()+diffR.count()+diffS.count() << " s\n";
 }
 
 

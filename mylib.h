@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <chrono>
 
 
 using std::cout;
@@ -31,6 +32,9 @@ using std::left;
 using std::setw;
 using std::ios;
 
+using namespace std::chrono;
+
+
 struct Studentas{
     string var, pav, kategorija;
     vector <int> paz;
@@ -47,7 +51,7 @@ int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
 void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
 bool palygStudentByKat(Studentas a, Studentas b);
-void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas);
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff);
 bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 
