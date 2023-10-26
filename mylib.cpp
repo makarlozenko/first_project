@@ -3,7 +3,8 @@
 float vidurkis(list<int> pazymiai) {
     if (pazymiai.empty()) return 0.0f;
     int suma = 0;
-    for (int pazymys : pazymiai) {
+    for (auto it = pazymiai.begin(); it != pazymiai.end(); ++it) {
+        int pazymys= *it;
         suma += pazymys;
     }
     return static_cast<float>(suma) / pazymiai.size();
@@ -16,12 +17,15 @@ float mediana(list<int> pazymiai) {
     sortedPazymiai.sort();
 
     int n = sortedPazymiai.size();
+    auto it = sortedPazymiai.begin();
+    advance(it, n / 2);
+
     if (n % 2 == 0) {
-        int vid1 = sortedPazymiai[n / 2 - 1];
-        int vid2 = sortedPazymiai[n / 2];
+        int vid1 = *prev(it);
+        int vid2 = *it;
         return static_cast<float>(vid1 + vid2) / 2.0f;
     } else {
-        return static_cast<float>(sortedPazymiai[n / 2]);
+        return static_cast<float>(*it);
     }
 }
 
@@ -71,7 +75,7 @@ int kiekStulp(string failoPavadinimas){
 }
 
 
-void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai){
+void nuskaitytiDuomenisIsFailo(string failoPavadinimas, list<Studentas>& studentai){
     ifstream failas(failoPavadinimas);
     if (!failas.is_open()){
         cout << "Nepavyko atidaryti failo!" << endl;
@@ -91,34 +95,24 @@ void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& stude
         for (int i = 0; i < stulp-3; i++){
             failas >> pazymys;
             if (pazymys>0 && pazymys<11) {
-                studentas.paz.push_back(pazymys);
+                studentas.paz.push_front(pazymys);
             }else{
                 cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
             }
         }
 
         failas >> studentas.egz;
-        studentai.push_back(studentas);
+        studentai.push_front(studentas);
     }
     failas.close();
 }
 
-bool palygStudentByKat(Studentas a, Studentas b) {
-    return a.kategorija < b.kategorija;
-}
 
-bool palygStudentByPav(Studentas a, Studentas b) {
-    return a.pav < b.pav;
-}
-
-bool palygStudentByGp(Studentas a, Studentas b) {
-    return a.rezv < b.rezv;
-}
 
 
 
 void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg){
-    vector<Studentas> studentai;
+    list<Studentas> studentai;
 
     auto startS = high_resolution_clock::now();
 
@@ -141,7 +135,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
         for (int k = 0; k < stulp-3; k++){
             failas >> pazymys;
             if (pazymys>0 && pazymys<11) {
-                studentas.paz.push_back(pazymys);
+                studentas.paz.push_front(pazymys);
             }else{
                 cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
             }
@@ -160,7 +154,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
         } else {
             studentas.kategorija = "Kietakis";
         }
-        studentai.push_back(studentas);
+        studentai.push_front(studentas);
     }
 
     auto endS = high_resolution_clock::now();
@@ -171,14 +165,20 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 
     auto startR = high_resolution_clock::now();
 
-    if (rusiuoti=="v"){
-        sort(studentai.begin(), studentai.end(),palygStudentByVar);
-    }else if (rusiuoti=="p"){
-        sort(studentai.begin(), studentai.end(),palygStudentByPav);
-    }else if (rusiuoti=="gp"){
-        sort(studentai.begin(), studentai.end(),palygStudentByGp);
-    }else {
-        cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
+    if (rusiuoti == "v") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.var < b.var;
+        });
+    } else if (rusiuoti == "p") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.pav < b.pav;
+        });
+    } else if (rusiuoti == "gp") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.rezv < b.rezv;
+        });
+    } else {
+        cout << "Neteisingai ivesta. Nebuvo surusiuota." << endl;
     }
 
     auto endR = high_resolution_clock::now();
@@ -232,7 +232,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 }
 
 void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg){
-    vector<Studentas> studentai;
+    list<Studentas> studentai;
 
     auto startS = high_resolution_clock::now();
 
@@ -255,7 +255,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         for (int k = 0; k < stulp-3; k++){
             failas >> pazymys;
             if (pazymys>0 && pazymys<11) {
-                studentas.paz.push_back(pazymys);
+                studentas.paz.push_front(pazymys);
             }else{
                 cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
             }
@@ -274,7 +274,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         } else {
             studentas.kategorija = "Kietakis";
         }
-        studentai.push_back(studentas);
+        studentai.push_front(studentas);
     }
 
     auto endS = high_resolution_clock::now();
@@ -286,15 +286,22 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
     auto startR = high_resolution_clock::now();
 
-    if (rusiuoti=="v"){
-        sort(studentai.begin(), studentai.end(),palygStudentByVar);
-    }else if (rusiuoti=="p"){
-        sort(studentai.begin(), studentai.end(),palygStudentByPav);
-    }else if (rusiuoti=="gp"){
-        sort(studentai.begin(), studentai.end(),palygStudentByGp);
-    }else {
-        cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
+    if (rusiuoti == "v") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.var < b.var;
+        });
+    } else if (rusiuoti == "p") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.pav < b.pav;
+        });
+    } else if (rusiuoti == "gp") {
+        studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.rezv < b.rezv;
+        });
+    } else {
+        cout << "Neteisingai ivesta. Nebuvo surusiuota." << endl;
     }
+
 
     auto endR = high_resolution_clock::now();
     duration<double> diffR = endR-startR;
@@ -348,17 +355,13 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
 
 
-bool palygStudentByVar(Studentas a, Studentas b) {
-    return a.var < b.var;
-}
-
-
-void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila){
+void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila){
     printf("\nStudentu duomenys:\n");
     printf("---------------------------------------------------------------------------------------\n");
 
-    sort(studentai.begin(), studentai.end(),palygStudentByVar);
-
+    studentai.sort([](const Studentas& a, const Studentas& b) {
+            return a.var < b.var;
+    });
     if (naudotiFaila==0){
         printf("%-25s%-25s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
         printf("---------------------------------------------------------------------------------------\n");

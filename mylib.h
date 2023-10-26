@@ -53,7 +53,7 @@ float skaiciuotiGalutiniBala(Studentas studentas, bool naudotiMediana);
 int GetRandomPaz(int minimum, int maximum);
 int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
-void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
+void nuskaitytiDuomenisIsFailo(string failoPavadinimas, list<Studentas>& studentai);
 bool palygStudentByKat(Studentas a, Studentas b);
 void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
 void rusiuotiDuomenisIsEgzistFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
