@@ -355,27 +355,27 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
 
 
-void spausdintiDuomenis(list<Studentas>& studentai, bool naudotiMediana, bool naudotiFaila) {
+void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila) {
     printf("\nStudentu duomenys:\n");
     printf("---------------------------------------------------------------------------------------\n");
 
     if (naudotiFaila == 0) {
-        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)", "Adresas\n");
+        printf("%-25s%-25s%-20s%-20s%s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)", "Adresas");
         printf("---------------------------------------------------------------------------------------\n");
-        for (const Studentas& studentas : studentai) {
-            printf("%-25s%-25s%-20.2f%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv, studentas.rezm, &studentas);
+        for ( Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%-20.2f%p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv, studentas.rezm, &studentas);
         }
     } else if (naudotiMediana == 1) {
-        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Med.)", "Adresas\n");
+        printf("%-25s%-25s%-20s%-20s%s\n", "Vardas", "Pavarde", "Galutinis(Med.)", "Adresas");
         printf("--------------------------------------------------------------------------------------\n");
-        for (const Studentas& studentas : studentai) {
-            printf("%-25s%-25s%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
+        for ( Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
         }
     } else {
-        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Adresas\n");
-        printf("--------------------------------------------------------------------------------------\n");
-        for (const Studentas& studentas : studentai) {
-            printf("%-25s%-25s%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
+        printf("%-25s%-25s%-20s%-20s%s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Adresas");
+        printf("--------------------------------------------------------------------------------------");
+        for ( Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
         }
     }
 

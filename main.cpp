@@ -325,7 +325,7 @@ int main() {
 
             }
             (*it).rez = skaiciuotiGalutiniBala((*it), naudotiMediana);
-            i=+1;
+            i++;
         }
         spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
     }
