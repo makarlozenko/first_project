@@ -126,11 +126,11 @@ int main() {
 
                     for(int k = 0; k < ndKiekis; k++) {
                         pazymysF = GetRandomPaz(1, 10);
-                        studentas.paz.push_front(pazymysF);//-------------------//
+                        studentas.paz.push_front(pazymysF);
                     }
                     studentas.egz = GetRandomPaz(1, 10);
 
-                    studentai.push_front(studentas);//----------------//
+                    studentai.push_front(studentas);
                 }
 
 
@@ -140,12 +140,12 @@ int main() {
                 }
                 nFailas << left << setw(20) << "Egzaminas"<<endl ;
 
-                for (Studentas student : studentai) {
-                    nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav ;
-                    for (int paz : student.paz){
+                for (auto it = studentai.rbegin(); it != studentai.rend(); ++it) {
+                    nFailas << left << setw(30) << (*it).var << left << setw(30)  << (*it).pav ;
+                    for (int paz : (*it).paz){
                         nFailas << left << setw(5) << paz;
                     }
-                    nFailas << left << setw(20) << student.egz<<endl;
+                    nFailas << left << setw(20) << (*it).egz<<endl;
                 }
                 nFailas.close();
 
@@ -174,7 +174,7 @@ int main() {
             nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
             int eil=kiekEiluciu(failoPavadinimas);
             bool naudotiMediana;
-            for (auto it = studentai.begin(); it != studentai.end(); ++it) { //auto it = studentai.begin(); it != studentai.end(); ++it
+            for (auto it = studentai.begin(); it != studentai.end(); ++it) {
                 naudotiMediana=1;
                 (*it).rezm = skaiciuotiGalutiniBala((*it), naudotiMediana);
                 naudotiMediana=0;
