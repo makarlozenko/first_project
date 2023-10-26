@@ -392,4 +392,3 @@ void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool n
             return true;
         }
     }
-

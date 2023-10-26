@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
+#include <list>
 
 
 
@@ -32,6 +33,7 @@ using std::to_string;
 using std::left;
 using std::setw;
 using std::ios;
+using std::list;
 
 
 using namespace std::chrono;
@@ -39,7 +41,7 @@ using namespace std::chrono;
 
 struct Studentas{
     string var, pav, kategorija;
-    vector <int> paz;
+    list <int> paz;
     int egz;
     float rez, rezv, rezm;
 };

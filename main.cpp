@@ -94,7 +94,7 @@ int main() {
             double sumaVarg=0;
 
             for (int t=1; t<=testuSk; t++){
-                vector <Studentas> studentai;
+                list<Studentas> studentai; //-------------------------------------//
 
                 auto start = high_resolution_clock::now();
 
@@ -126,11 +126,11 @@ int main() {
 
                     for(int k = 0; k < ndKiekis; k++) {
                         pazymysF = GetRandomPaz(1, 10);
-                        studentas.paz.push_back(pazymysF);
+                        studentas.paz.push_front(pazymysF);//-------------------//
                     }
                     studentas.egz = GetRandomPaz(1, 10);
 
-                    studentai.push_back(studentas);
+                    studentai.push_front(studentas);//----------------//
                 }
 
 
@@ -329,4 +329,3 @@ int main() {
     }
     return 0;
 }
-
