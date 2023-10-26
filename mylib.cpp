@@ -355,36 +355,33 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
 
 
-void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila){
+void spausdintiDuomenis(list<Studentas>& studentai, bool naudotiMediana, bool naudotiFaila) {
     printf("\nStudentu duomenys:\n");
     printf("---------------------------------------------------------------------------------------\n");
 
-    studentai.sort([](const Studentas& a, const Studentas& b) {
-            return a.var < b.var;
-    });
-    if (naudotiFaila==0){
-        printf("%-25s%-25s%-20s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)","Galutinis(Med.)");
+    if (naudotiFaila == 0) {
+        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Galutinis(Med.)", "Adresas\n");
         printf("---------------------------------------------------------------------------------------\n");
-        for (Studentas studentas : studentai) {
-            printf("%-25s%-25s%-20.2f%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv,studentas.rezm);
+        for (const Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rezv, studentas.rezm, &studentas);
         }
-    }else if (naudotiMediana==1){
-        printf("%-25s%-25s%-20s\n", "Vardas","Pavarde","Galutinis(Med.)");
+    } else if (naudotiMediana == 1) {
+        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Med.)", "Adresas\n");
         printf("--------------------------------------------------------------------------------------\n");
-        for (Studentas studentas : studentai) {
-            printf("%-25s%-25s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+        for (const Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
         }
-    }else{
-        printf("%-25s%-25s%-20s\n", "Vardas","Pavarde","Galutinis(Vid.)");
+    } else {
+        printf("%-25s%-25s%-20s%-20s%-20s\n", "Vardas", "Pavarde", "Galutinis(Vid.)", "Adresas\n");
         printf("--------------------------------------------------------------------------------------\n");
-        for (Studentas studentas : studentai) {
-            printf("%-25s%-25s%-20.2f\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez);
+        for (const Studentas& studentas : studentai) {
+            printf("%-25s%-25s%-20.2f%-20p\n", studentas.var.c_str(), studentas.pav.c_str(), studentas.rez, &studentas);
         }
     }
+
     printf("----------------------------------------------------------------------------------------\n");
+}
 
-
-  }
 
     bool checkFile(string file_name) {
         ifstream file;

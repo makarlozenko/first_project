@@ -59,7 +59,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 void rusiuotiDuomenisIsEgzistFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
 bool palygStudentByVar(Studentas a, Studentas b);
 bool palygStudentByVar(Studentas a, Studentas b);
-void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
+void spausdintiDuomenis(list<Studentas>& studentai, bool naudotiMediana, bool naudotiFaila);
 bool checkFile(string file_name);
 
 #endif // MYLIB_H_INCLUDED
