@@ -47,8 +47,8 @@ struct Studentas{
 };
 
 
-float vidurkis(vector<int> pazymiai);
-float mediana(vector<int> pazymiai);
+float vidurkis(list<int> pazymiai);
+float mediana(list<int> pazymiai);
 float skaiciuotiGalutiniBala(Studentas studentas, bool naudotiMediana);
 int GetRandomPaz(int minimum, int maximum);
 int kiekEiluciu(string failoPavadinimas);
@@ -59,7 +59,7 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 void rusiuotiDuomenisIsEgzistFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
 bool palygStudentByVar(Studentas a, Studentas b);
 bool palygStudentByVar(Studentas a, Studentas b);
-void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
+void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 bool checkFile(string file_name);
 
 #endif // MYLIB_H_INCLUDED

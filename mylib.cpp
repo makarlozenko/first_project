@@ -1,6 +1,6 @@
 #include "mylib.h"
 
-float vidurkis(vector<int> pazymiai) {
+float vidurkis(list<int> pazymiai) {
     if (pazymiai.empty()) return 0.0f;
     int suma = 0;
     for (int pazymys : pazymiai) {
@@ -9,11 +9,11 @@ float vidurkis(vector<int> pazymiai) {
     return static_cast<float>(suma) / pazymiai.size();
 }
 
-float mediana(vector<int> pazymiai) {
+float mediana(list<int> pazymiai) {
     if (pazymiai.empty()) return 0.0f;
 
-    vector<int> sortedPazymiai = pazymiai;
-    sort(sortedPazymiai.begin(), sortedPazymiai.end());
+    list<int> sortedPazymiai = pazymiai;
+    sortedPazymiai.sort();
 
     int n = sortedPazymiai.size();
     if (n % 2 == 0) {
