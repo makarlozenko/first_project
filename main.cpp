@@ -47,25 +47,68 @@ int main() {
             cout<<"Kiek norite padaryti testu? ";
             cin >>testuSk;
 
+            bool senasnaujas;
+            while(true){
+                try{
+                    cout << "Naudosim sena '0' arba nauja '1' faila: ";
+                    cin >> senasnaujas;
+
+                    if(cin.fail() || (senasnaujas != 0 && senasnaujas != 1)){
+                        throw invalid_argument("Nevalidus pasirinkimas. Prasome ivesti 0 arba 1.");
+                    }else{
+                        break;
+                    }
+                }catch (invalid_argument e){
+                    cerr << e.what() << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }
+            }
             string naujasFailas;
-            cout << "Iveskite naujo failo pavadinima: ";
-            cin >> naujasFailas;
-
             int sKiekis;
-            cout<<"Kiek norite studentu? ";
-            cin>>sKiekis;
-
             int ndKiekis;
-            cout<<"Kiek norite namu darbu? ";
-            cin>>ndKiekis;
+
+            if (senasnaujas==0){
+
+                cout << "Iveskite seno failo pavadinima: ";
+                cin >> naujasFailas;
+            } else {
+                cout << "Iveskite naujo failo pavadinima: ";
+                cin >> naujasFailas;
+
+                cout<<"Kiek norite studentu? ";
+                cin>>sKiekis;
+
+                cout<<"Kiek norite namu darbu? ";
+                cin>>ndKiekis;
+            }
+
+            string rusiuoti;
+            cout <<"Rusiuoti pagal pasirnkta parametra: v - varda, p-pavarde, gp - galutini pazymi: ";
+            cin >> rusiuoti;
 
             double suma=0;
+            double sumaNusk=0;
+            double sumaRus=0;
+            double sumaKiet=0;
+            double sumaVarg=0;
 
             for (int t=1; t<=testuSk; t++){
                 vector <Studentas> studentai;
 
                 auto start = high_resolution_clock::now();
 
+                if (checkFile(naujasFailas+to_string(t)+".txt")){
+                    string egzfailas = naujasFailas+to_string(t)+".txt";
+                    cout << "Failas jau egzistuoja"<<endl;
+
+                    for (int t=1; t<=testuSk; t++){
+                        auto end = high_resolution_clock::now();
+                        duration<double> diff = start-start;
+                        rusiuotiDuomenisIsEgzistFailo(egzfailas, sKiekis,  diff, t, suma, rusiuoti, sumaNusk,sumaRus,sumaKiet,sumaVarg);
+                    }
+                    break;
+                }else{
                 ofstream nFailas (naujasFailas+to_string(t)+".txt");
 
                 srand(time(NULL));
@@ -87,12 +130,6 @@ int main() {
                     }
                     studentas.egz = GetRandomPaz(1, 10);
 
-                    naudotiMediana=1;
-                    studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
-
-                    naudotiMediana=0;
-                    studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
-
                     studentai.push_back(studentas);
                 }
 
@@ -101,14 +138,14 @@ int main() {
                 for (int j=1; j<=ndKiekis; j++){
                     nFailas << left << setw(5) << "ND"+to_string(j);
                 }
-                nFailas << left << setw(20) << "Egzaminas"<< left << setw(20) << "Mediana"<< left << setw(20) << "Vidurkis"<<endl ;
+                nFailas << left << setw(20) << "Egzaminas"<<endl ;
 
                 for (Studentas student : studentai) {
                     nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav ;
                     for (int paz : student.paz){
                         nFailas << left << setw(5) << paz;
                     }
-                    nFailas << left << setw(20) << student.egz<< left << setw(20) << student.rezm<< left << setw(20) << student.rezv<<endl;
+                    nFailas << left << setw(20) << student.egz<<endl;
                 }
                 nFailas.close();
 
@@ -116,9 +153,16 @@ int main() {
                 duration<double> diff = end-start;
                 cout << sKiekis << " elementu uzpildymas uztruko: "<< diff.count() << " s\n";
 
-                rusiuotiDuomenisIsGeneruotoFailo(naujasFailas, sKiekis,  diff, t, suma);
+                rusiuotiDuomenisIsGeneruotoFailo(naujasFailas, sKiekis,  diff, t, suma,rusiuoti,sumaNusk,sumaRus,sumaKiet,sumaVarg);
+                }
+
+
             }
-            cout<<"Padarytu testu laiko vidurkis: "<<suma/testuSk<<endl;
+            cout<<"Padarytu testu laiko vidurkis: "<<suma/testuSk<< " s"<<endl;
+            cout<<"Failu nuskaitymu laiko vidurkis: "<<sumaNusk/testuSk<< " s"<<endl;
+            cout<<"Failu rusiavimo laiko vidurkis: "<<sumaRus/testuSk<< " s"<<endl;
+            cout<<"Kietakiu irasymo laiko vidurkis: "<<sumaKiet/testuSk<< " s"<<endl;
+            cout<<"Vargsiuku irasymo laiko vidurkis: "<<sumaVarg/testuSk<< " s"<<endl;
 
 
 
