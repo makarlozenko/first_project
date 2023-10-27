@@ -246,6 +246,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
     int stulp=kiekStulp(egzfailas);
     int eil=kiekEiluciu(egzfailas);
+    sKiekis=eil-2;
 
     for (int i=0; i<eil-2; i++){
         Studentas studentas;
