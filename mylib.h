@@ -14,6 +14,7 @@
 #include <chrono>
 
 
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -31,6 +32,7 @@ using std::to_string;
 using std::left;
 using std::setw;
 using std::ios;
+
 
 using namespace std::chrono;
 
@@ -51,8 +53,11 @@ int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
 void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
 bool palygStudentByKat(Studentas a, Studentas b);
-void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma);
+void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
+void rusiuotiDuomenisIsEgzistFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
+bool palygStudentByVar(Studentas a, Studentas b);
 bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
+bool checkFile(string file_name);
 
 #endif // MYLIB_H_INCLUDED
