@@ -94,7 +94,7 @@ int main() {
             double sumaVarg=0;
 
             for (int t=1; t<=testuSk; t++){
-                list<Studentas> studentai; //-------------------------------------//
+                vector <Studentas> studentai;
 
                 auto start = high_resolution_clock::now();
 
@@ -126,11 +126,11 @@ int main() {
 
                     for(int k = 0; k < ndKiekis; k++) {
                         pazymysF = GetRandomPaz(1, 10);
-                        studentas.paz.push_front(pazymysF);
+                        studentas.paz.push_back(pazymysF);
                     }
                     studentas.egz = GetRandomPaz(1, 10);
 
-                    studentai.push_front(studentas);
+                    studentai.push_back(studentas);
                 }
 
 
@@ -140,12 +140,12 @@ int main() {
                 }
                 nFailas << left << setw(20) << "Egzaminas"<<endl ;
 
-                for (auto it = studentai.rbegin(); it != studentai.rend(); ++it) {
-                    nFailas << left << setw(30) << (*it).var << left << setw(30)  << (*it).pav ;
-                    for (int paz : (*it).paz){
+                for (Studentas student : studentai) {
+                    nFailas << left << setw(30) << student.var << left << setw(30)  << student.pav ;
+                    for (int paz : student.paz){
                         nFailas << left << setw(5) << paz;
                     }
-                    nFailas << left << setw(20) << (*it).egz<<endl;
+                    nFailas << left << setw(20) << student.egz<<endl;
                 }
                 nFailas.close();
 
@@ -167,18 +167,18 @@ int main() {
 
 
         }else{
-            list <Studentas> studentai;
+            vector <Studentas> studentai;
             string failoPavadinimas;
             cout << "Iveskite failo pavadinima: ";
             cin >> failoPavadinimas;
             nuskaitytiDuomenisIsFailo(failoPavadinimas, studentai);
             int eil=kiekEiluciu(failoPavadinimas);
             bool naudotiMediana;
-            for (auto it = studentai.begin(); it != studentai.end(); ++it) {
+            for (int m = 0; m < eil-1; m++) {
                 naudotiMediana=1;
-                (*it).rezm = skaiciuotiGalutiniBala((*it), naudotiMediana);
+                studentai[m].rezm = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
                 naudotiMediana=0;
-                (*it).rezv = skaiciuotiGalutiniBala((*it), naudotiMediana);
+                studentai[m].rezv = skaiciuotiGalutiniBala(studentai[m], naudotiMediana);
             }
             spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
         }
@@ -241,15 +241,14 @@ int main() {
         }
     }
 
-        list <Studentas> studentai(studentuSkaicius);
-        int i=0;
+        vector <Studentas> studentai(studentuSkaicius);
 
-        for (auto it = studentai.begin(); it != studentai.end(); ++it) {
+        for (int i = 0; i < studentuSkaicius; i++) {
             cout << "Iveskite " << i + 1 << " studento varda: ";
-            cin >> (*it).var;
+            cin >> studentai[i].var;
 
             cout << "Iveskite " << i + 1 << " studento pavarde: ";
-            cin >> (*it).pav;
+            cin >> studentai[i].pav;
 
             if (generuotiPaz==0){
                  cout << "Iveskite " << i + 1 << " studento namu darbu rezultatus (baigti su -1): ";
@@ -263,7 +262,7 @@ int main() {
                         } else if (pazymys == -1) {
                             break;
                         } else {
-                            (*it).paz.push_front(pazymys);
+                            studentai[i].paz.push_back(pazymys);
                         }
                     }catch (invalid_argument e){
                         cerr << e.what() << endl;
@@ -276,9 +275,9 @@ int main() {
                 while (true) {
                     try{
                         cout << "Iveskite " << i + 1 << " studento egzamino rezultata: ";
-                        cin >> (*it).egz;
+                        cin >> studentai[i].egz;
 
-                        if (cin.fail() || (*it).egz<1 ||(*it).egz>10) {
+                        if (cin.fail() || studentai[i].egz<1 ||studentai[i].egz>10) {
                             throw invalid_argument( "Nevalidus rezultatas. Prasome ivesti pazymi.");
                         } else {
                             break;
@@ -316,18 +315,18 @@ int main() {
                 cout << "Atsitiktinai sugeneruoti " << i + 1 << " studento namu darbu pazymiai:" ;
                 for(int k = 0; k < ndkiekis; k++) {
                     pazymys = GetRandomPaz(1, 10);
-                    (*it).paz.push_back(pazymys);
+                    studentai[i].paz.push_back(pazymys);
                     cout << pazymys << " ";
                 }
                 cout << endl;
-                (*it).egz = GetRandomPaz(1, 10);
-                cout << "Egzaminas: " << (*it).egz <<endl;
+                studentai[i].egz = GetRandomPaz(1, 10);
+                cout << "Egzaminas: " << studentai[i].egz <<endl;
 
             }
-            (*it).rez = skaiciuotiGalutiniBala((*it), naudotiMediana);
-            i++;
+            studentai[i].rez = skaiciuotiGalutiniBala(studentai[i], naudotiMediana);
         }
         spausdintiDuomenis(studentai, naudotiMediana,naudotiFaila);
     }
     return 0;
 }
+

@@ -12,7 +12,6 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
-#include <list>
 
 
 
@@ -33,7 +32,7 @@ using std::to_string;
 using std::left;
 using std::setw;
 using std::ios;
-using std::list;
+using std::remove_if;
 
 
 using namespace std::chrono;
@@ -41,25 +40,26 @@ using namespace std::chrono;
 
 struct Studentas{
     string var, pav, kategorija;
-    list <int> paz;
+    vector <int> paz;
     int egz;
     float rez, rezv, rezm;
 };
 
 
-float vidurkis(list<int> pazymiai);
-float mediana(list<int> pazymiai);
+float vidurkis(vector<int> pazymiai);
+float mediana(vector<int> pazymiai);
 float skaiciuotiGalutiniBala(Studentas studentas, bool naudotiMediana);
 int GetRandomPaz(int minimum, int maximum);
 int kiekEiluciu(string failoPavadinimas);
 int kiekStulp(string failoPavadinimas);
-void nuskaitytiDuomenisIsFailo(string failoPavadinimas, list<Studentas>& studentai);
+void nuskaitytiDuomenisIsFailo(string failoPavadinimas, vector<Studentas>& studentai);
 bool palygStudentByKat(Studentas a, Studentas b);
 void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
 void rusiuotiDuomenisIsEgzistFailo(string failoPavadinimas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg);
 bool palygStudentByVar(Studentas a, Studentas b);
 bool palygStudentByVar(Studentas a, Studentas b);
-void spausdintiDuomenis(list<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
+void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 bool checkFile(string file_name);
+bool isLessThan5(const Studentas& student);
 
 #endif // MYLIB_H_INCLUDED
