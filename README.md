@@ -17,11 +17,18 @@ Su list pagalba:
 | Bendras laikas           | 0.0429543 s  | 0.279514 s   | 2.75171 s   | 25.259 s  |  303.756 s |
 
 
-Su vector pagalba:
+# Su vector pagalba:
+Buvo ištirtos 4 skirtingos strategijos:
+Mano pradinė strategija:
 | Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
 |--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
-| Failo   nuskaitymas      | 0.0116689 s  | 0.0794894 s    |  0.659001 s   |  6.23968 s | 64.1348 s  |
-| Funkcija sort            |  0.00958386 s | 0.0683177 s |  0.875017 s | 10.9887 s | 134.411 s |
-| Išvedimas į   kietakius  | 0.00501364 s | 0.0329312 s  | 0.287941 s  | 2.88729 s | 27.8969 s |
-| Išvedimas į   vargšiukus |   0.0039875 s  | 0.0225429 s  |  0.215953 s  | 2.10209 s | 21.0374 s |
-| Bendras laikas           | 0.0302539 s |  0.203281 s   | 2.03791 s   | 22.2178 s  | 247.48 s |
+| Failo   nuskaitymas      | 0.00578446 s  | 0.0522601 s    |  0.506964 s   |  5.07819 s | 51.577 s  |
+| Funkcija sort            |  0.00438454 s |  0.0528577 s |  0.69525 s | 8.74361 s | 106.866 s |
+| Išvedimas į   kietakius  | 0.0027923 s | 0.0218337 s  | 0.223655 s | 2.23034 s | 22.5428 s |
+| Išvedimas į   vargšiukus |   0.00199626 s  | 0.0183487 s|  0.163962 s  | 1.66494 s | 16.8454  s |
+| Bendras laikas           |  0.0149576 s|   0.1453 s   |  1.58983 s   | 17.7171 s  | 197.831 s |
+
+
+![image](https://github.com/makarlozenko/first_project/assets/145557353/f23340cb-24ba-4a8e-a493-82cc8affcfb7)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/61af6db4-879a-40fc-8a16-d5f5826fa0b2)
+
