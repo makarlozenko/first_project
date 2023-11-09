@@ -232,7 +232,10 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
 }
 
  bool isLessThan5(const Studentas& student) {
-            return student.rezv < 5.0;
+            return student.rezv <= 5.0;
+        }
+bool isMoreThan5(const Studentas& student) {
+            return student.rezv > 5.0;
         }
 
 void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg){
@@ -316,7 +319,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         ofstream failasRusK(egzfailas+to_string(t)+"Kietakiai.txt");
         failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
         for (Studentas student : studentai) {
-            if (student.rezv > 5.0) {
+            if (student.kategorija == "Kietakis") {
                 failasRusK << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
             }else{
                 continue;
@@ -334,7 +337,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         ofstream failasRusV(egzfailas+to_string(t)+"Vargsiukai.txt");
         failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
         for (Studentas student : studentai) {
-            if (student.rezv < 5.0) {
+            if (student.kategorija == "Vargsiukas") {
                 failasRusV << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
             }else{
                 continue;
@@ -633,14 +636,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
             cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
         }
 
-       /*for (Studentas student : studentai) {
-            if (student.rezv < 5.0) {
-                vargsiukai.push_back(student);
-            }else{
-                continue;
-            }
-        }*/
-        remove_copy_if(studentai.begin(), studentai.end(), vargsiukai.begin(), isLessThan5);
+        remove_copy_if(studentai.begin(), studentai.end(), back_inserter(vargsiukai), isMoreThan5);
         studentai.erase(remove_if(studentai.begin(), studentai.end(), isLessThan5), studentai.end());
 
         auto endR = high_resolution_clock::now();

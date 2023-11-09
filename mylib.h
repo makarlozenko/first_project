@@ -33,6 +33,8 @@ using std::left;
 using std::setw;
 using std::ios;
 using std::remove_if;
+using std::remove_copy_if;
+using std::back_inserter;
 
 
 using namespace std::chrono;
@@ -61,5 +63,6 @@ bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 bool checkFile(string file_name);
 bool isLessThan5(const Studentas& student);
+bool isMoreThan5(const Studentas& student);
 
 #endif // MYLIB_H_INCLUDED
