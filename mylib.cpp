@@ -231,19 +231,19 @@ void rusiuotiDuomenisIsGeneruotoFailo(string failoPavadinimas, int sKiekis, dura
     suma+=overall;
 }
 
- bool isLessThan5(const Studentas& student) {
-            return student.rezv <= 5.0;
+ bool maziau5(const Studentas& student) {
+            return student.rezv < 5.0;
         }
-bool isMoreThan5(const Studentas& student) {
-            return student.rezv > 5.0;
+bool daugiau5(const Studentas& student) {
+            return student.rezv >= 5.0;
         }
 
 void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<double> diff, int t, double &suma,string rusiuoti,double &sumaNusk,double &sumaRus,double &sumaKiet,double &sumaVarg){
 
     int strategija;
-    cout << "Kokia strategija naudosime: 1 - pradine, 2 - du konteineriai, 3 - vienas konteineris, 4 - vienas konteineris patobulintas: ";
+    cout << "Kokia strategija naudosime: 0 - pradine, 1 - du konteineriai, 2 - vienas konteineris, 3 - vienas konteineris patobulintas: ";
     cin >> strategija;
-    if (strategija==1){//------------------------------------------------------------------------------------------------------------------//
+    if (strategija==0){//------------------------------------------------------------------------------------------------------------------//
         vector<Studentas> studentai;
 
         auto startS = high_resolution_clock::now();
@@ -356,7 +356,7 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         cout <<"-------------------------------------------------------------------------------------------"<<endl;
         suma+=overall;
 
-    }else if (strategija==2){//------------------------------------------------------------------------------------------------------------------//
+    }else if (strategija==1){//------------------------------------------------------------------------------------------------------------------//
         vector<Studentas> studentai;
         vector<Studentas> vargsiukai;
         vector<Studentas> kietakiai;
@@ -466,6 +466,119 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
         cout <<"-------------------------------------------------------------------------------------------"<<endl;
         suma+=overall;
 
+    }else if (strategija==2){//------------------------------------------------------------------------------------------------------------------//
+        vector<Studentas> studentai;
+        vector<Studentas> vargsiukai;
+
+        auto startS = high_resolution_clock::now();
+
+        ifstream failas(egzfailas);
+        if (!failas.is_open()){
+            cout << "Nepavyko atidaryti failo!" << endl;
+            return;
+        }
+        string pirmojiEilute;
+        getline(failas, pirmojiEilute);
+
+        int stulp=kiekStulp(egzfailas);
+        int eil=kiekEiluciu(egzfailas);
+        sKiekis=eil-2;
+
+        for (int i=0; i<eil-2; i++){
+            Studentas studentas;
+            failas >> studentas.var >> studentas.pav;
+            int pazymys;
+
+            for (int k = 0; k < stulp-3; k++){
+                failas >> pazymys;
+                if (pazymys>0 && pazymys<11) {
+                    studentas.paz.push_back(pazymys);
+                }else{
+                    cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
+                }
+            }
+
+            failas >> studentas.egz;
+
+            bool naudotiMediana=1;
+            studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+            naudotiMediana=0;
+            studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
+
+            studentai.push_back(studentas);
+        }
+
+        auto endS = high_resolution_clock::now();
+        duration<double> diffS = endS-startS;
+        cout << "Failo is " << sKiekis << " elementu nuskaitymas uztruko: "<< diffS.count() << " s\n";
+        sumaNusk+=diffS.count();
+
+        auto startR = high_resolution_clock::now();
+
+        for (Studentas student : studentai) {
+            if (student.rezv < 5.0) {
+                vargsiukai.push_back(student);
+            }else{
+                continue;
+            }
+        }
+        studentai.erase(remove_if(studentai.begin(), studentai.end(), maziau5), studentai.end());
+
+        if (rusiuoti=="v"){
+            sort(studentai.begin(), studentai.end(),palygStudentByVar);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByVar);
+        }else if (rusiuoti=="p"){
+            sort(studentai.begin(), studentai.end(),palygStudentByPav);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByPav);
+        }else if (rusiuoti=="gp"){
+            sort(studentai.begin(), studentai.end(),palygStudentByGp);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByGp);
+        }else {
+            cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
+        }
+
+        auto endR = high_resolution_clock::now();
+        duration<double> diffR = endR-startR;
+        cout << "Failo is " << sKiekis << " elementu rusiavimas su sort funkcija uztruko: "<< diffR.count() << " s\n";
+        sumaRus+=diffR.count();
+
+        failas.close();
+
+        auto startK = high_resolution_clock::now();
+
+        ofstream failasRusK(egzfailas+to_string(t)+"Kietakiai.txt");
+        failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+        for (Studentas student : studentai) {
+            failasRusK << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+        }
+        failasRusK.close();
+
+        auto endK = high_resolution_clock::now();
+        duration<double> diffK = endK-startK;
+        cout << "Failo is " << sKiekis << " elementu kietakiu irasymas i nauja faila uztruko: "<< diffK.count() << " s\n";
+        sumaKiet+=diffK.count();
+
+        auto startV = high_resolution_clock::now();
+
+        ofstream failasRusV(egzfailas+to_string(t)+"Vargsiukai.txt");
+        failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
+        for (Studentas student : vargsiukai) {
+            failasRusV << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
+        }
+        failasRusV.close();
+
+        auto endV = high_resolution_clock::now();
+        duration<double> diffV = endV-startV;
+        cout << "Failo is " << sKiekis << " elementu vargsiuku irasymas i nauja faila uztruko: "<< diffV.count() << " s\n";
+        sumaVarg+=diffV.count();
+
+        double overall = diffV.count()+diff.count()+diffK.count()+diffR.count()+diffS.count();
+
+        cout << "Failo is " << sKiekis << " elementu testo bendras laikas: "<< overall << " s\n";
+        cout <<"-------------------------------------------------------------------------------------------"<<endl;
+        suma+=overall;
+
     }else if (strategija==3){//------------------------------------------------------------------------------------------------------------------//
         vector<Studentas> studentai;
         vector<Studentas> vargsiukai;
@@ -516,128 +629,21 @@ void rusiuotiDuomenisIsEgzistFailo(string egzfailas, int sKiekis, duration<doubl
 
         auto startR = high_resolution_clock::now();
 
-        if (rusiuoti=="v"){
-            sort(studentai.begin(), studentai.end(),palygStudentByVar);
-        }else if (rusiuoti=="p"){
-            sort(studentai.begin(), studentai.end(),palygStudentByPav);
-        }else if (rusiuoti=="gp"){
-            sort(studentai.begin(), studentai.end(),palygStudentByGp);
-        }else {
-            cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
-        }
-
-       for (Studentas student : studentai) {
-            if (student.rezv < 5.0) {
-                vargsiukai.push_back(student);
-            }else{
-                continue;
-            }
-        }
-        studentai.erase(remove_if(studentai.begin(), studentai.end(), isLessThan5), studentai.end());
-
-        auto endR = high_resolution_clock::now();
-        duration<double> diffR = endR-startR;
-        cout << "Failo is " << sKiekis << " elementu rusiavimas su sort funkcija uztruko: "<< diffR.count() << " s\n";
-        sumaRus+=diffR.count();
-
-        failas.close();
-
-        auto startK = high_resolution_clock::now();
-
-        ofstream failasRusK(egzfailas+to_string(t)+"Kietakiai.txt");
-        failasRusK <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
-        for (Studentas student : studentai) {
-            failasRusK << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
-        }
-        failasRusK.close();
-
-        auto endK = high_resolution_clock::now();
-        duration<double> diffK = endK-startK;
-        cout << "Failo is " << sKiekis << " elementu kietakiu irasymas i nauja faila uztruko: "<< diffK.count() << " s\n";
-        sumaKiet+=diffK.count();
-
-        auto startV = high_resolution_clock::now();
-
-        ofstream failasRusV(egzfailas+to_string(t)+"Vargsiukai.txt");
-        failasRusV <<left << setw(30) << "Vardas"<< left << setw(30) << "Pavarde"<< left << setw(30) << "Galutinis vidurkis"<< left << setw(30) << "Galutine mediana"<< endl;
-        for (Studentas student : vargsiukai) {
-            failasRusV << left << setw(30) << student.var << left << setw(30)  << student.pav << left << setw(30)  << student.rezv << left << setw(30)  << student.rezm << endl;
-        }
-        failasRusV.close();
-
-        auto endV = high_resolution_clock::now();
-        duration<double> diffV = endV-startV;
-        cout << "Failo is " << sKiekis << " elementu vargsiuku irasymas i nauja faila uztruko: "<< diffV.count() << " s\n";
-        sumaVarg+=diffV.count();
-
-        double overall = diffV.count()+diff.count()+diffK.count()+diffR.count()+diffS.count();
-
-        cout << "Failo is " << sKiekis << " elementu testo bendras laikas: "<< overall << " s\n";
-        cout <<"-------------------------------------------------------------------------------------------"<<endl;
-        suma+=overall;
-
-    }else if (strategija==4){//------------------------------------------------------------------------------------------------------------------//
-        vector<Studentas> studentai;
-        vector<Studentas> vargsiukai;
-
-        auto startS = high_resolution_clock::now();
-
-        ifstream failas(egzfailas);
-        if (!failas.is_open()){
-            cout << "Nepavyko atidaryti failo!" << endl;
-            return;
-        }
-        string pirmojiEilute;
-        getline(failas, pirmojiEilute);
-
-        int stulp=kiekStulp(egzfailas);
-        int eil=kiekEiluciu(egzfailas);
-        sKiekis=eil-2;
-
-        for (int i=0; i<eil-2; i++){
-            Studentas studentas;
-            failas >> studentas.var >> studentas.pav;
-            int pazymys;
-
-            for (int k = 0; k < stulp-3; k++){
-                failas >> pazymys;
-                if (pazymys>0 && pazymys<11) {
-                    studentas.paz.push_back(pazymys);
-                }else{
-                    cout<<"Pazymys blogai ivestas. Jis buvo praleistas"<<endl;
-                }
-            }
-
-            failas >> studentas.egz;
-
-            bool naudotiMediana=1;
-            studentas.rezm = skaiciuotiGalutiniBala(studentas, naudotiMediana);
-
-            naudotiMediana=0;
-            studentas.rezv = skaiciuotiGalutiniBala(studentas, naudotiMediana);
-
-            studentai.push_back(studentas);
-        }
-
-        auto endS = high_resolution_clock::now();
-        duration<double> diffS = endS-startS;
-        cout << "Failo is " << sKiekis << " elementu nuskaitymas uztruko: "<< diffS.count() << " s\n";
-        sumaNusk+=diffS.count();
-
-        auto startR = high_resolution_clock::now();
+        remove_copy_if(studentai.begin(), studentai.end(), back_inserter(vargsiukai), daugiau5);
+        studentai.erase(remove_if(studentai.begin(), studentai.end(), maziau5), studentai.end());
 
         if (rusiuoti=="v"){
             sort(studentai.begin(), studentai.end(),palygStudentByVar);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByVar);
         }else if (rusiuoti=="p"){
             sort(studentai.begin(), studentai.end(),palygStudentByPav);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByPav);
         }else if (rusiuoti=="gp"){
             sort(studentai.begin(), studentai.end(),palygStudentByGp);
+            sort(vargsiukai.begin(), vargsiukai.end(),palygStudentByGp);
         }else {
             cout << "Neteisingai ivesta. Nebuvo surusiuota."<<endl;
         }
-
-        remove_copy_if(studentai.begin(), studentai.end(), back_inserter(vargsiukai), isMoreThan5);
-        studentai.erase(remove_if(studentai.begin(), studentai.end(), isLessThan5), studentai.end());
 
         auto endR = high_resolution_clock::now();
         duration<double> diffR = endR-startR;

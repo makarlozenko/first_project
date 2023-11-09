@@ -62,7 +62,7 @@ bool palygStudentByVar(Studentas a, Studentas b);
 bool palygStudentByVar(Studentas a, Studentas b);
 void spausdintiDuomenis(vector<Studentas> studentai, bool naudotiMediana, bool naudotiFaila);
 bool checkFile(string file_name);
-bool isLessThan5(const Studentas& student);
-bool isMoreThan5(const Studentas& student);
+bool maziau5(const Studentas& student);
+bool daugiau5(const Studentas& student);
 
 #endif // MYLIB_H_INCLUDED
