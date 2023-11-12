@@ -32,3 +32,29 @@ Mano pradinė strategija:
 ![image](https://github.com/makarlozenko/first_project/assets/145557353/f23340cb-24ba-4a8e-a493-82cc8affcfb7)
 ![image](https://github.com/makarlozenko/first_project/assets/145557353/61af6db4-879a-40fc-8a16-d5f5826fa0b2)
 
+
+1 strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.00578302 s  | 0.0521313 s    |  0.502739 s   |  5.04545 s |  51.9489 s  |
+| Funkcija sort            |   0.00518904 s |   0.0577269 s |   0.749958 s | 9.30362 s | 115.679 s |
+| Išvedimas į   kietakius  | 0.00322656 s | 0.0218755 s  | 0.214084 s | 2.09009 s | 20.7948 s |
+| Išvedimas į   vargšiukus |   0.00259632 s  |  0.0168975 s|   0.152457 s  |  1.61211 s | 15.0351 s |
+| Bendras laikas           |  0.0167949 s|   0.148631 s   |  1.61924 s   | 18.0513 s  | 203.458 s|
+
+![image](https://github.com/makarlozenko/first_project/assets/145557353/e014f1f5-0239-4f53-9024-f44dd7bdb5d7)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/5b10ad03-89eb-484e-8c9d-f4b459c869da)
+
+2 strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.0062489 s  |  0.052367 s    |  0.520939 s   |  5.06549 s |  51.0306 s  |
+| Funkcija sort            |    0.0039886 s |   0.0542086 s |   0.752332 s | 8.94664 s | 107.902 s |
+| Išvedimas į   kietakius  |  0.00263278 s | 0.0213522 s  | 0.294148 s | 2.13861 s | 20.9753 s|
+| Išvedimas į   vargšiukus |    0.0022718 s  |  0.0159612 s|   0.191023 s  |  1.49192 s | 15.2137 s |
+| Bendras laikas           |   0.0151421 s|    0.143889 s   |  1.75844 s   | 17.6427 s  | 195.121 s|
+
+![image](https://github.com/makarlozenko/first_project/assets/145557353/5eb5d218-5b55-4714-b51e-15c5077cbf9f)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/5367fbac-64c4-4e8a-9de1-de1e30860582)
+
+
