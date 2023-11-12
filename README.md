@@ -4,21 +4,9 @@ Sistemos informacija:
 |-------------------------------------------|-----|-------|
 | Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz | 8GB | 512GB |
 
-
-
-
-Su list pagalba:
-| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
-|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
-| Failo   nuskaitymas      | 0.0294929 s  | 0.1829 s     | 1.78584 s   | 15.9916 s | 160.531 s  |
-| Funkcija sort            | 0.00079958 s | 0.00628592 s | 0.0886389 s | 1.18419 s | 18.1277 s|
-| Išvedimas į   kietakius  | 0.00705416 s | 0.0496732 s  | 0.476569 s  | 4.38624 s | 85.8532 s |
-| Išvedimas į   vargšiukus | 0.0056076 s  | 0.0406545 s  | 0.400662 s  | 3.697 s | 39.7111 s |
-| Bendras laikas           | 0.0429543 s  | 0.279514 s   | 2.75171 s   | 25.259 s  |  303.756 s |
-
-
 # Su vector pagalba:
 Buvo ištirtos 4 skirtingos strategijos:
+
 Mano pradinė strategija:
 | Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
 |--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
@@ -72,6 +60,74 @@ Atminties informacija 1000000 ir 10000000 failų atvėjuose:
 Atminties informacija 1000000 ir 10000000 failų atvėjuose:
 ![image](https://github.com/makarlozenko/first_project/assets/145557353/80f5ea43-938d-4198-932f-30be64f5f81c)
 ![image](https://github.com/makarlozenko/first_project/assets/145557353/9928329c-ad16-491d-9f8f-27a4891498e8)
+
+
+# Su list pagalba:
+Buvo ištirtos 4 skirtingos strategijos:
+
+Mano pradinė strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.00578446 s  | 0.135417 s    |  0.503226 s   |  13.669 s | 137.125 s  |
+| Funkcija sort            |  0.00438454 s |   0.00411717 s |  0.683994 s |  0.986695 s | 14.7913 s|
+| Išvedimas į   kietakius  | 0.0027923 s | 0.0349688 s  |  0.216273 s |  3.78637 s | 103.341 s |
+| Išvedimas į   vargšiukus |   0.00199626 s  | 0.0309929 s|  0.161346 s  | 3.21893 s | 33.5491 s |
+| Bendras laikas           |  0.0149576 s|   0.205496 s   |  1.56484 s   | 21.661 s  | 288.806 s |
+
+Atminties informacija 1000000 ir 10000000 failų atvėjuose:
+![image](https://github.com/makarlozenko/first_project/assets/145557353/157ce69b-4ed0-4a90-b690-ccc9ea678400)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/11571e68-aa9b-4cb4-87e2-82e62d6df485)
+
+1 strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.0150242 s  | 0.136058 s    |  1.36741 s   |   13.5291 s | 138.108 s  |
+| Funkcija sort            |  0.00324002 s |   0.0299738 s |   0.356669 s |  3.821 s | 305.751 s|
+| Išvedimas į   kietakius  |  0.00334412 s | 0.0282086 s  |  0.275868 s |  2.77653 s | 65.1643 s |
+| Išvedimas į   vargšiukus |   0.00315454 s  | 0.0208223 s|  0.198226 s  | 2.01122 s | 28.5851 s |
+| Bendras laikas           |  0.0247629 s|  0.215063 s  |  2.19817 s   | 22.1379 s  | 537.608 s |
+
+Atminties informacija 1000000 ir 10000000 failų atvėjuose:
+![image](https://github.com/makarlozenko/first_project/assets/145557353/6c8b1e51-cc0d-4520-831f-c1092af79feb)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/aea78268-4910-4a33-b1cf-07106abb9074)
+
+2 strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.0148683 s  | 0.136807 s    |  1.35602 s   |   13.4458 s | 136.323 s  |
+| Funkcija sort            |  0.0012477 s |   0.0249354 s |   0.271271 s |  3.03185 s | 61.226 s|
+| Išvedimas į   kietakius  |  0.00363985 s |0.0311195 s  |  0.294841 s |  2.94861 s | 46.2706 s |
+| Išvedimas į   vargšiukus |   0.00249293 s  | 0.0212426 s|  0.208165 s  | 2.07228 s | 55.2058 s |
+| Bendras laikas           |  0.0222488 s|  0.214105 s  |  2.1303 s   | 21.4985 s  | 299.026 s |
+
+Atminties informacija 1000000 ir 10000000 failų atvėjuose:
+![image](https://github.com/makarlozenko/first_project/assets/145557353/6af4d7d6-076c-48a6-89ab-54a65f101ab4)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/40d72343-7a93-4d91-a3fb-53bece932440)
+
+3 strategija:
+| Testavimas               |     1000     |     10000    |    100000   |  1000000  |  10000000 |
+|--------------------------|:------------:|:------------:|:-----------:|:---------:|:---------:|
+| Failo   nuskaitymas      | 0.0147247 s  | 0.136197 s   |  1.37031 s   |   13.5737 s | 136.721 s  |
+| Funkcija sort            |  0.00265993 s |   0.0133458 s |   0.158257 s |   1.90772 s | 50.5523 s|
+| Išvedimas į   kietakius  |  0.00322187 s |0.031052 s  |  0.306218 s |  3.14378 s | 47.8015 s |
+| Išvedimas į   vargšiukus |   0.002631 s  | 0.0216922 s|   0.210801 s  | 2.24965 s | 51.8523 s|
+| Bendras laikas           |  0.0232375 s|  0.202287 s |  2.04559 s  | 20.8748 s  | 286.927 s |
+
+Atminties informacija 1000000 ir 10000000 failų atvėjuose:
+![image](https://github.com/makarlozenko/first_project/assets/145557353/d710ce1b-11d8-4157-89e2-4b66b1e3dd3d)
+![image](https://github.com/makarlozenko/first_project/assets/145557353/0d6753d2-e623-44b5-94fe-127837f291e1)
+
+
+
+
+
+
+ 
+
+
+
+
+
 
 
 
