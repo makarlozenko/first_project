@@ -4,6 +4,29 @@ Sistemos informacija:
 |-------------------------------------------|-----|-------|
 | Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz | 8GB | 512GB |
 
+# Instrukcija
+Paleidus programą, atsiranda juodas langas:
+
+(Toliau kiekvieną įvedimą baigiame su Enter paspaudimu)
+
+1. Spaudžiame 1 - duomenys bus įvedami rankiniu būdu. Spaudžiame 0 - duomenis gausime iš failo.
+   
+   Jei pasirinkome rankiniu būdu:
+   
+   1.1. Spaudžiame 1 - bus skaižiuojamas pažymių vidurkis. Spaudžiame 0 - bus skaižiuojama pažymių mediana.
+   
+   1.2. Įvedame studentų skaičių.
+   
+   1.3. Spaudžiame 1 - kompiuteris generuoja pazymius atsitiktinai. Spaudžiame 0 - duomenys bus įvedami rankiniu būdu.
+
+   1.4. Pasirinkus 1, įvedame studentų vardus ir pavardes bei pasririnkom, kiek norime sugeneruoti pažymių - galiusiai gausime norimus rezultatus. Pasirinkus 0, įvedame studentų vardus, pavardes, pažymius per 
+   Space paspaudimą, baigiant įvedimą su -1 ir Enter paspaudimu, bei egzamino rezultatą - galiusiai gausime norimus rezultatus.
+
+   Jei pasirinkome duomenis iš failo:
+
+   2.1. 
+
+
 # Su vector pagalba:
 Buvo ištirtos 4 skirtingos strategijos:
 
