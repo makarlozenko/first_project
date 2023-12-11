@@ -22,9 +22,34 @@ Paleidus programą, atsiranda juodas langas:
    1.4. Pasirinkus 1, įvedame studentų vardus ir pavardes bei pasririnkom, kiek norime sugeneruoti pažymių - galiusiai gausime norimus rezultatus. Pasirinkus 0, įvedame studentų vardus, pavardes, pažymius per 
    Space paspaudimą, baigiant įvedimą su -1 ir Enter paspaudimu, bei egzamino rezultatą - galiusiai gausime norimus rezultatus.
 
-   Jei pasirinkome duomenis iš failo:
+2. Jei pasirinkome duomenis iš failo:
 
-   2.1. 
+   2.1. Spaudžiame 1 - naudosime failo generavimą. Spaudžiame 0 - galėsime nuskaityti jau egzistuojančius failus.
+
+   2.2. Jei pasirinkome tiesiog failo nuskaitymą, tai kitas žingsnis - įvesti failo pilną pavadinimą ir tada gausime rezultatus ekrane. Pasirinkus faių generavimą įvedame norimą testų skaičių (bus skaičiuojama 
+   programos vikimo spartą ir gaunamas šių rezultatų vidurkis).
+
+   2.2.  Spaudžiame 1 - dirbsime su šios programos jau sukurtais failais. Spaudžiame 0 - galėsime sugeneruoti naujus failus.
+
+   Darbas su šios programos jau sukurtais failais:
+
+         2.3.1. Įvedame seno failo pavadinimą bę plėtinio ".txt" ir failo versijos - jie bus pridėti automatiškai.
+   
+         2.3.2. Pasirenkame parametrą, pagal kurį bus surušiuoti studentai: "v" - vardą, "p" - pavardę, "gp" - galutinį pazymį.
+   
+         2.3.3. Pasirenkame, kokią strategiją naudosime: 0 - pradinę (struct - "kategorija"), 1 - naudojami papildomi du konteineriai, 2 - naudojamas tik vienas papildomas konteineris, 3 - patonulinta antra strategija.
+   
+         2.3.4. Galiausiai, ekrane gausime programos veikimo spartos informaciją, o programos aplankale -  rezultatų failus.
+   
+   Naujų failų generavimas:
+   
+         2.4.1. Įvedame naujo failo pavadinimą bę plėtinio ".txt" - jis bus sukurtas automatiškai.
+   
+         2.4.2. Įvedame kiek mums reikia studentų ir kiek kiekvienas iš jų turės pažymių neįskaitant egzamino.
+   
+         2.4.3. Galiausiai, pasirenkame parametrą, pagal kurį bus surušiuoti studentai: "v" - vardą, "p" - pavardę, "gp" - galutinį pazymį. Ekrane gausime programos veikimo spartos informaciją, o programos                aplankale -  rezultatų failus.
+
+   
 
 
 # Su vector pagalba:
